@@ -105,7 +105,7 @@ function Operation(miscViewModel, options, svgViewModel, materialViewModel, oper
     self.enabled = ko.observable(true);
     self.ramp = ko.observable(false);
     self.combineOp = ko.observable("Union");
-    self.camOp = ko.observable("Pocket");
+    self.camOp = ko.observable("Engrave");
     self.direction = ko.observable("Conventional");
     self.cutDepth = ko.observable(0);
     self.margin = ko.observable("0.0");
@@ -237,6 +237,7 @@ function Operation(miscViewModel, options, svgViewModel, materialViewModel, oper
     self.recombine();
 
     var generatingToolpath = false;
+    // function called when click on "generate" button
     self.generateToolPath = function () {
         var toolCamArgs = toolModel.getCamArgs();
         if (toolCamArgs == null)
@@ -275,7 +276,7 @@ function Operation(miscViewModel, options, svgViewModel, materialViewModel, oper
 
         if (options.profile)
             console.log("generateToolPath: " + (Date.now() - startTime));
-
+                
         self.enabled(true);
         generatingToolpath = false;
         toolPathsChanged();
