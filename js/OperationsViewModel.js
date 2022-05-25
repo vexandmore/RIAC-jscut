@@ -280,6 +280,7 @@ function Operation(miscViewModel, options, svgViewModel, materialViewModel, oper
         self.enabled(true);
         generatingToolpath = false;
         toolPathsChanged();
+        gcodeConversionViewModel.zeroLowerLeft();
     }
 
     self.toolPaths.subscribe(function () {

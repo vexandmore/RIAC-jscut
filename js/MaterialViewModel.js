@@ -22,7 +22,7 @@ function MaterialViewModel() {
     self.unitConverter = new UnitConverter(self.matUnits);
     self.matThickness = ko.observable("25.4");
     self.matZOrigin = ko.observable("Top");
-    self.matClearance = ko.observable("2.54");
+    self.matClearance = ko.observable("25.4");
     self.materialSvg = ko.observable(null);
 
     self.unitConverter.add(self.matThickness);
