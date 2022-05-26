@@ -19,11 +19,11 @@ var options = {
 
     // Enable Google Drive integration?
     // This only works when the app is served directly from jscut.org.
-    enableGoogleDrive: true,
+    enableGoogleDrive: false,
 
     // Enable Dropbox integration?
     // This only works when the app is served directly from jscut.org.
-    enableDropbox: true,
+    enableDropbox: false,
 
     // Debug run times
     profile: false,
