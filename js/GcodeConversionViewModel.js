@@ -44,22 +44,21 @@ function GcodeConversionViewModel(options, miscViewModel, materialViewModel, too
         return (-self.unitConverter.fromInch(operationsViewModel.minY() / jscut.priv.path.inchToClipperScale) + Number(self.offsetY())).toFixed(4);
     });
 
+    self.reset = function() {
+        self.offsetX(0);
+        self.offsetY(0);
+        self.gcode("");
+    }
+
     self.zeroLowerLeft = function () {
         allowGen = false;
         self.offsetX(-self.unitConverter.fromInch(operationsViewModel.minX() / jscut.priv.path.inchToClipperScale));
         self.offsetY(-self.unitConverter.fromInch(-operationsViewModel.maxY() / jscut.priv.path.inchToClipperScale));
         allowGen = true;
-        self.generateGcode();
+        //self.generateGcode();
     }
 
-    self.zeroCenter = function () {
-        allowGen = false;
-        self.offsetX(-self.unitConverter.fromInch((operationsViewModel.minX() + operationsViewModel.maxX()) / 2 / jscut.priv.path.inchToClipperScale));
-        self.offsetY(-self.unitConverter.fromInch(-(operationsViewModel.minY() + operationsViewModel.maxY()) / 2 / jscut.priv.path.inchToClipperScale));
-        allowGen = true;
-        self.generateGcode();
-    }
-
+    // important
     self.generateGcode = function () {
         if (!allowGen)
             return;

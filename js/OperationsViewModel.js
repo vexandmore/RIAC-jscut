@@ -38,6 +38,12 @@ function ToolModel() {
             self.angle(180);
     });
 
+    self.reset = function() {
+        while (self.operations().length > 0) {
+            self.removeOperation(self.operations()[0]);
+        }
+    }
+
     self.getCamArgs = function () {
         result = {
             diameterClipper: self.diameter.toInch() * jscut.priv.path.inchToClipperScale,
@@ -279,8 +285,9 @@ function Operation(miscViewModel, options, svgViewModel, materialViewModel, oper
                 
         self.enabled(true);
         generatingToolpath = false;
-        toolPathsChanged();
         gcodeConversionViewModel.zeroLowerLeft();
+        // this generates the gcode
+        toolPathsChanged();
     }
 
     self.toolPaths.subscribe(function () {

@@ -259,6 +259,15 @@ $(document).on('change', '#choose-svg-file', function (event) {
     $(event.target).replaceWith(control = $(event.target).clone(true));
 });
 
+// This function resets the whole app.
+// Removes all svgs, operations, and clears the simulation.
+function clearSVGs() {
+    operationsViewModel.reset();
+    gcodeConversionViewModel.reset();
+    contentGroup.clear();
+    renderPath.fillPathBuffer("", 0, 0, 0, 0);
+}
+
 function openSvgDropbox() {
     Dropbox.choose({
         success: function (files) {
