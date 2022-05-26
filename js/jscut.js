@@ -259,6 +259,10 @@ $(document).on('change', '#choose-svg-file', function (event) {
     $(event.target).replaceWith(control = $(event.target).clone(true));
 });
 
+function clearFiles() {
+    $("#choose-svg-file")[0].value = '';
+}
+
 // This function resets the whole app.
 // Removes all svgs, operations, and clears the simulation.
 function clearSVGs() {
