@@ -38,12 +38,6 @@ function ToolModel() {
             self.angle(180);
     });
 
-    self.reset = function() {
-        while (self.operations().length > 0) {
-            self.removeOperation(self.operations()[0]);
-        }
-    }
-
     self.getCamArgs = function () {
         result = {
             diameterClipper: self.diameter.toInch() * jscut.priv.path.inchToClipperScale,
@@ -391,6 +385,12 @@ function OperationsViewModel(miscViewModel, options, svgViewModel, materialViewM
         for (var i = 0; i < ops.length; ++i)
             ops[i].recombine();
     });
+
+    self.reset = function() {
+        while (self.operations().length > 0) {
+            self.removeOperation(self.operations()[0]);
+        }
+    }
 
     function findMinMax() {
         var minX = 0, maxX = 0, minY = 0, maxY = 0;
