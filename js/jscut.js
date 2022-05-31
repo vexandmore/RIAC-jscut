@@ -259,6 +259,8 @@ $(document).on('change', '#choose-svg-file', function (event) {
     $(event.target).replaceWith(control = $(event.target).clone(true));
 });
 
+// This allows the same file to be chosen twice, like
+// if you add the svg file, clear, then re-add that file
 function clearFiles() {
     $("#choose-svg-file")[0].value = '';
 }
