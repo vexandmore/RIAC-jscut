@@ -237,6 +237,7 @@ function Operation(miscViewModel, options, svgViewModel, materialViewModel, oper
     self.recombine();
 
     var generatingToolpath = false;
+
     // function called when click on "generate" button
     self.generateToolPath = function () {
         var toolCamArgs = toolModel.getCamArgs();
@@ -252,12 +253,12 @@ function Operation(miscViewModel, options, svgViewModel, materialViewModel, oper
 
         var geometry = self.combinedGeometry;
         var offset = self.margin.toInch() * jscut.priv.path.inchToClipperScale;
-        if (self.camOp() == "Pocket" || self.camOp() == "V Pocket" || self.camOp() == "Inside")
-            offset = -offset;
-        if (self.camOp() != "Engrave" && offset != 0)
-            geometry = jscut.priv.path.offset(geometry, offset);
+        //if (self.camOp() == "Pocket" || self.camOp() == "V Pocket" || self.camOp() == "Inside")
+        //    offset = -offset;
+        //if (self.camOp() != "Engrave" && offset != 0)
+        //    geometry = jscut.priv.path.offset(geometry, offset);
 
-        if (self.camOp() == "Pocket")
+        /*if (self.camOp() == "Pocket")
             self.toolPaths(jscut.priv.cam.pocket(geometry, toolCamArgs.diameterClipper, 1 - toolCamArgs.stepover, self.direction() == "Climb"));
         else if (self.camOp() == "V Pocket")
             self.toolPaths(jscut.priv.cam.vPocket(geometry, toolModel.angle(), toolCamArgs.passDepthClipper, self.cutDepth.toInch() * jscut.priv.path.inchToClipperScale, toolCamArgs.stepover, self.direction() == "Climb"));
@@ -266,9 +267,10 @@ function Operation(miscViewModel, options, svgViewModel, materialViewModel, oper
             if (width < toolCamArgs.diameterClipper)
                 width = toolCamArgs.diameterClipper;
             self.toolPaths(jscut.priv.cam.outline(geometry, toolCamArgs.diameterClipper, self.camOp() == "Inside", width, 1 - toolCamArgs.stepover, self.direction() == "Climb"));
-        }
-        else if (self.camOp() == "Engrave")
-            self.toolPaths(jscut.priv.cam.engrave(geometry, self.direction() == "Climb"));
+        }*/
+        /*else if (self.camOp() == "Engrave")
+            self.toolPaths(jscut.priv.cam.engrave(geometry, self.direction() == "Climb"));*/
+        self.toolPaths(jscut.priv.cam.engrave(geometry, self.direction() == "Climb"));
 
         var path = jscut.priv.path.getSnapPathFromClipperPaths(jscut.priv.cam.getClipperPathsFromCamPaths(self.toolPaths()), svgViewModel.pxPerInch());
         if (path != null && path.length > 0)
@@ -452,6 +454,24 @@ function OperationsViewModel(miscViewModel, options, svgViewModel, materialViewM
         operation.removeToolPaths();
         var i = self.operations.indexOf(operation);
         self.operations.remove(operation);
+    }
+
+    self.generateGcode = function() {
+        rawPaths = [];
+        selectionViewModel.getSelection().forEach(function (element) {
+            rawPaths.push({
+                'path': Snap.parsePathString(element.attr('d')),
+                'nonzero': element.attr("fill-rule") != "evenodd",
+            });
+        });
+        selectionViewModel.clearSelection();
+        var op = new Operation(miscViewModel, options, svgViewModel, materialViewModel, self, toolModel, combinedGeometryGroup, toolPathsGroup, rawPaths, toolPathsChanged, false);
+        self.operations.push(op);
+        op.enabled.subscribe(findMinMax);
+        op.toolPaths.subscribe(findMinMax);
+        op.generateToolPath();
+        
+        self.tutorialGenerateToolpath();
     }
 
     self.clickOnSvg = function (elem) {
