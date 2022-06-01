@@ -24,8 +24,28 @@ function SelectionViewModel(svgViewModel, materialViewModel, selectionGroup) {
     self.selNumSelected = ko.observable("0");
 
     materialViewModel.unitConverter.add(self.selMinSegmentLength);
+    /**
+     * @returns All the paths in the loaded SVG file.
+     */
+    self.getAllPaths = function() {
+        var paths = [];
+        Snap.selectAll("g.layer path").forEach(function(element) {
+            var path = jscut.priv.path.getLinearSnapPathFromElement(element, self.selMinNumSegments(), self.selMinSegmentLength.toInch() * svgViewModel.pxPerInch(), function (msg) {
+                showAlert(msg, "alert-warning");
+            });
+    
+            if (path != null) {
+                var newPath = selectionGroup.path(path);
+                /*if (element.attr("fill-rule") == "evenodd")
+                    newPath.attr("fill-rule", "evenodd");*/
+            }
+            paths.push(newPath);
+        });
+        selectionGroup.clear();
+        return paths;
+    }
 
-    self.clickOnSvg = function (elem) {
+    /*self.clickOnSvg = function (elem) {
         if (elem.attr("class") == "selectedPath") {
             elem.remove();
             self.selNumSelected(self.selNumSelected() - 1);
@@ -45,16 +65,16 @@ function SelectionViewModel(svgViewModel, materialViewModel, selectionGroup) {
         }
 
         return true;
-    }
+    }*/
 
-    self.getSelection = function () {
+    /*self.getSelection = function () {
         return selectionGroup.selectAll("path");
-    }
+    }*/
 
-    self.clearSelection = function () {
+    /*self.clearSelection = function () {
         selectionGroup.selectAll("path").remove();
         self.selNumSelected(0);
-    }
+    }*/
 
     self.toJson = function () {
         return {

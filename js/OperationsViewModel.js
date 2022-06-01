@@ -428,34 +428,35 @@ function OperationsViewModel(miscViewModel, options, svgViewModel, materialViewM
         var i = self.operations.indexOf(operation);
         self.operations.remove(operation);
     }
-
+    /**
+     * This function makes gcode from each separate path. This means that
+     * if you have a shape within a shape, the contour of both will be present
+     * in the gcode.
+     */
     self.generateGcodeSeparate = function() {
         self.reset();
-
-        Snap.selectAll("g.layer path").forEach(function(element) {
-            selectionViewModel.clickOnSvg(element);
-            self.addOperation();
+        selectionViewModel.getAllPaths().forEach(function(element) {
+            self.addOperations([element]);
         });
     }
-
+    /**
+     * This makes gcode from the combined paths in the svg file.
+     * This means that if you have a shape within a shape, the outline
+     * of the inner shape is lost.
+     */
     self.generateGcodeCombine = function() {
         self.reset();
-
-        Snap.selectAll("g.layer path").forEach(function(element) {
-            selectionViewModel.clickOnSvg(element);
-        })
-        self.addOperation();
+        self.addOperations(selectionViewModel.getAllPaths());
     }
 
-    self.addOperation = function() {
+    self.addOperations = function(elements) {
         rawPaths = [];
-        selectionViewModel.getSelection().forEach(function (element) {
+        elements.forEach(function (element) {
             rawPaths.push({
                 'path': Snap.parsePathString(element.attr('d')),
                 'nonzero': element.attr("fill-rule") != "evenodd",
             });
         });
-        selectionViewModel.clearSelection();
         
         var op = new Operation(miscViewModel, options, svgViewModel, materialViewModel, self, toolModel, combinedGeometryGroup, toolPathsGroup, rawPaths, toolPathsChanged, false);
         self.operations.push(op);
@@ -464,11 +465,11 @@ function OperationsViewModel(miscViewModel, options, svgViewModel, materialViewM
         op.generateEngraveToolPath();
     }
 
-    self.clickOnSvg = function (elem) {
+    /*self.clickOnSvg = function (elem) {
         if (elem.attr("class") == "combinedGeometry" || elem.attr("class") == "toolPath")
             return true;
         return false;
-    }
+    }*/
 
     self.toJson = function () {
         var ops = self.operations();
