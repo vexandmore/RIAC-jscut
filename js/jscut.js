@@ -390,20 +390,20 @@ function hookupTabPopovers(nodes) {
     }
 }
 
-$('#createOperationButton').popover({
+$('#createGcodeSeparateButton').popover({
     trigger: "manual",
     html: true,
-    content: "<p class='bg-danger'>Select 1 or more objects in the \"Edit Toolpaths\" tab before clicking here</p>",
+    content: "<p class='bg-danger'>Load an svg file before clicking here</p>",
     container: "body",
     placement: "right"
 });
 
-$('#createOperationButton').parent().hover(
+$('#createGcodeSeparateButton').parent().hover(
     function () {
-        if ($('#createOperationButton').attr("disabled"))
-            $('#createOperationButton').popover('show');
+        if ($('#createGcodeSeparateButton').attr("disabled"))
+            $('#createGcodeSeparateButton').popover('show');
     },
-    function () { $('#createOperationButton').popover('hide'); });
+    function () { $('#createGcodeSeparateButton').popover('hide'); });
 
 function toJson() {
     return {

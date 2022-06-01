@@ -429,9 +429,25 @@ function OperationsViewModel(miscViewModel, options, svgViewModel, materialViewM
         self.operations.remove(operation);
     }
 
-    self.generateGcode = function() {
+    self.generateGcodeSeparate = function() {
         self.reset();
 
+        Snap.selectAll("g.layer path").forEach(function(element) {
+            selectionViewModel.clickOnSvg(element);
+            self.addOperation();
+        });
+    }
+
+    self.generateGcodeCombine = function() {
+        self.reset();
+
+        Snap.selectAll("g.layer path").forEach(function(element) {
+            selectionViewModel.clickOnSvg(element);
+        })
+        self.addOperation();
+    }
+
+    self.addOperation = function() {
         rawPaths = [];
         selectionViewModel.getSelection().forEach(function (element) {
             rawPaths.push({
@@ -446,8 +462,6 @@ function OperationsViewModel(miscViewModel, options, svgViewModel, materialViewM
         op.enabled.subscribe(findMinMax);
         op.toolPaths.subscribe(findMinMax);
         op.generateEngraveToolPath();
-        
-        self.tutorialGenerateToolpath();
     }
 
     self.clickOnSvg = function (elem) {

@@ -367,7 +367,8 @@ along with jscut.  If not, see <http://www.gnu.org/licenses/>.
                                     <td><input type="number" step="any" id="pxPerInch" data-bind="value: svgViewModel.pxPerInch">
                             </table>
                             <div style="display: inline-block">
-                                <button id="createOperationButton" class="btn btn-success" data-bind="click: generateGcode, enable:selectionViewModel.selNumSelected()>0">Generate gcode</button>
+                                <button id="createGcodeSeparateButton" class="btn btn-success" data-bind="click: generateGcodeSeparate">Generate gcode - Separate</button> <!-- TODO: make button show when it's useful -->
+                                <button id="createGcodeCombinedButton" class="btn btn-success" data-bind="click: generateGcodeCombine">Generate gcode - Combine</button> <!-- TODO: make button show when it's useful -->
                             </div>
                         </div>
                         <div style="display:table">
