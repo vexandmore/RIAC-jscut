@@ -200,28 +200,6 @@ along with jscut.  If not, see <http://www.gnu.org/licenses/>.
         <div class="row">
             <!-- left -->
             <div class="col-sm-3 left-column">
-                <!-- operations -->
-                <div class="panel panel-default" id="Operations">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOperations">Operations</a>
-                        </h3>
-                    </div>
-                    <div id="collapseOperations" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <table class="table">
-                                <tr>
-                                    <td><label for="pxPerInch">px per inch</label>
-                                    <td><input type="number" step="any" id="pxPerInch" data-bind="value: svgViewModel.pxPerInch">
-                            </table>
-                            <div style="display: inline-block">
-                                <button id="createOperationButton" class="btn btn-default" data-bind="click: generateGcode, enable:selectionViewModel.selNumSelected()>0">Generate gcode</button>
-                            </div>
-                        </div>
-                        <div style="display:table">
-                        </div> 
-                    </div>
-                </div>
                 <!-- tabs -->
                 <div class="panel panel-default" id="Tabs">
                     <div class="panel-heading">
@@ -374,6 +352,28 @@ along with jscut.  If not, see <http://www.gnu.org/licenses/>.
             <!-- right -->
             <div class="col-sm-3 right-column">
                 <div id="alert_placeholder"></div>
+                <!-- Generate gcode -->
+                <div class="panel panel-default" id="Operations">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOperations">Generate Gcode!</a>
+                        </h3>
+                    </div>
+                    <div id="collapseOperations" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td><label for="pxPerInch">px per inch</label>
+                                    <td><input type="number" step="any" id="pxPerInch" data-bind="value: svgViewModel.pxPerInch">
+                            </table>
+                            <div style="display: inline-block">
+                                <button id="createOperationButton" class="btn btn-success" data-bind="click: generateGcode, enable:selectionViewModel.selNumSelected()>0">Generate gcode</button>
+                            </div>
+                        </div>
+                        <div style="display:table">
+                        </div> 
+                    </div>
+                </div>
                 <!-- material -->
                 <div class="panel panel-default" id="Material">
                     <div class="panel-heading">

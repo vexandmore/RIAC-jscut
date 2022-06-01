@@ -179,7 +179,7 @@ function GcodeConversionViewModel(options, miscViewModel, materialViewModel, too
             renderPath.setStopAtTime(renderPath.totalTime);
         }
 
-        tutorial(5, 'You\'re done! Look at the "Simulate GCODE" tab. Save your gcode.');
+        tutorial(4, 'You\'re done! Look at the "Simulate GCODE" tab. Save your gcode.');
     }
 
     self.offsetX.subscribe(self.generateGcode);

@@ -294,7 +294,7 @@ $("#MainSvg").click(function (e) {
     if (element != null) {
         operationsViewModel.clickOnSvg(element) || tabsViewModel.clickOnSvg(element) || selectionViewModel.clickOnSvg(element);
         if (selectionViewModel.selNumSelected() > 0) {
-            tutorial(3, 'Click "Create Operation" after you have finished selecting objects.');
+            tutorial(3, 'Click "Generate gcode" after you have finished selecting objects.');
         }
     }
 });
