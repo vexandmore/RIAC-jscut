@@ -31,6 +31,8 @@ function MiscViewModel() {
     self.localStorageSettings = ko.observableArray([]);
     self.loadedCamCpp = ko.observable(false);
     self.camCppError = ko.observable("");
+
+    self.fileLoaded = ko.observable(false);
 }
 
 var mainSvg = Snap("#MainSvg");
@@ -244,14 +246,17 @@ $(document).on('change', '#choose-svg-file', function (event) {
             var reader = new FileReader();
             reader.onload = function (e) {
                 loadSvg(alert, file.name, e.target.result);
+                miscViewModel.fileLoaded(true);
             };
             reader.onabort = function (e) {
                 alert.remove();
                 showAlert("aborted reading " + file.name, "alert-danger");
+                miscViewModel.fileLoaded(false);
             };
             reader.onerror = function (e) {
                 alert.remove();
                 showAlert("error reading " + file.name, "alert-danger");
+                miscViewModel.fileLoaded(false);
             };
             reader.readAsText(file);
         })(file);
@@ -272,6 +277,7 @@ function clearSVGs() {
     gcodeConversionViewModel.reset();
     contentGroup.clear();
     renderPath.fillPathBuffer("", 0, 0, 0, 0);
+    miscViewModel.fileLoaded(false);
 }
 
 function openSvgDropbox() {
@@ -404,6 +410,21 @@ $('#createGcodeSeparateButton').parent().hover(
             $('#createGcodeSeparateButton').popover('show');
     },
     function () { $('#createGcodeSeparateButton').popover('hide'); });
+
+$('#createGcodeCombineButton').popover({
+    trigger: "manual",
+    html: true,
+    content: "<p class='bg-danger'>Load an svg file before clicking here</p>",
+    container: "body",
+    placement: "right"
+});
+
+$('#createGcodeCombineButton').parent().hover(
+    function () {
+        if ($('#createGcodeCombineButton').attr("disabled"))
+            $('#createGcodeCombineButton').popover('show');
+    },
+    function () { $('#createGcodeCombineButton').popover('hide'); });
 
 function toJson() {
     return {
