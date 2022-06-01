@@ -235,7 +235,7 @@ function loadSvg(alert, filename, content) {
     if(alert)
         alert.remove();
     showAlert("loaded " + filename, "alert-success");
-    tutorial(2, 'Click 1 or more objects.');
+    tutorial(2, 'Click on either "Generate gcode - Separate", or "Generate gcode - Combine".');
 }
 
 // This event is fired when the file picker is used.
