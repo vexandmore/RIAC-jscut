@@ -238,6 +238,8 @@ function loadSvg(alert, filename, content) {
     tutorial(2, 'Click 1 or more objects.');
 }
 
+// This event is fired when the file picker is used.
+// It clears any existing svg file, if read is successful.
 $(document).on('change', '#choose-svg-file', function (event) {
     var files = event.target.files;
     for (var i = 0, file; file = files[i]; ++i) {
@@ -245,6 +247,7 @@ $(document).on('change', '#choose-svg-file', function (event) {
             var alert = showAlert("loading " + file.name, "alert-info", false);
             var reader = new FileReader();
             reader.onload = function (e) {
+                clearSVGs();
                 loadSvg(alert, file.name, e.target.result);
                 miscViewModel.fileLoaded(true);
             };
@@ -264,6 +267,7 @@ $(document).on('change', '#choose-svg-file', function (event) {
     $(event.target).replaceWith(control = $(event.target).clone(true));
 });
 
+// This function is called when Open SVG -> local is clicked.
 // This allows the same file to be chosen twice, like
 // if you add the svg file, clear, then re-add that file
 function clearFiles() {
@@ -295,7 +299,9 @@ function openSvgDropbox() {
     });
 }
 
-$("#MainSvg").click(function (e) {
+// This is the function that made the different paths highlight
+// when clicked. It is disabled, since that now happens automatically.
+/*$("#MainSvg").click(function (e) {
     var element = Snap.getElementByPoint(e.pageX, e.pageY);
     if (element != null) {
         operationsViewModel.clickOnSvg(element) || tabsViewModel.clickOnSvg(element) || selectionViewModel.clickOnSvg(element);
@@ -303,7 +309,7 @@ $("#MainSvg").click(function (e) {
             tutorial(3, 'Click "Generate gcode" after you have finished selecting objects.');
         }
     }
-});
+});*/
 
 function makeAllSameUnit(val) {
     "use strict";
