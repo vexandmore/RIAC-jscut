@@ -315,6 +315,13 @@ along with jscut.  If not, see <http://www.gnu.org/licenses/>.
                             </li>
                             <li><a href="#" onclick="showSaveSettingsModal()">Save Settings</a></li>
                             <li><a href="#save-gcode-modal" data-toggle="modal">Save GCODE</a></li>
+                            
+                            <li class="dropdown" id="translationDropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-bind="html: miscViewModel().Language"></strong></a>
+                                <ul class="dropdown-menu" data-bind="foreach: languages">
+                                    <li><a href="#" data-bind="text: $data, click: $parent.setLanguage"></a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </nav>
@@ -505,6 +512,7 @@ along with jscut.  If not, see <http://www.gnu.org/licenses/>.
     <script src="js/OperationsViewModel.js"></script>
     <script src="js/TabsViewModel.js"></script>
     <script src="js/GcodeConversionViewModel.js"></script>
+    <script src="js/TranslationManager.js"></script>
     <script src="js/jscut.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onGoogleApiLoad"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=onGoogleClientLoad"></script>

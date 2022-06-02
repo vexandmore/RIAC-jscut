@@ -53,6 +53,7 @@ var operationsViewModel;
 var tabsViewModel;
 var gcodeConversionViewModel;
 var miscViewModel;
+var translationManager;
 
 function loadScript(path, loadedCallback, errorCallback) {
     var done = false;
@@ -133,6 +134,7 @@ tabsViewModel = new TabsViewModel(
     miscViewModel, options, svgViewModel, materialViewModel, selectionViewModel, tabsGroup,
     function () { gcodeConversionViewModel.generateGcode(); });
 gcodeConversionViewModel = new GcodeConversionViewModel(options, miscViewModel, materialViewModel, toolModel, operationsViewModel, tabsViewModel);
+translationManager = new TranslationManager();
 
 ko.applyBindings(materialViewModel, $("#Material")[0]);
 ko.applyBindings(selectionViewModel, $("#CurveToLine")[0]);
@@ -153,6 +155,7 @@ ko.applyBindings(miscViewModel, $("#saveGcodeGoogle1")[0]);
 ko.applyBindings(miscViewModel, $("#openSvgGoogle1")[0]);
 ko.applyBindings(miscViewModel, $("#loadSettingsGoogle1")[0]);
 ko.applyBindings(miscViewModel, $("#openSvgDropbox1")[0]);
+ko.applyBindings(translationManager, $("#translationDropdown")[0]);
 
 
 function updateSvgAutoHeight() {
