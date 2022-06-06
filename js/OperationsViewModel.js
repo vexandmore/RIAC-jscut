@@ -349,6 +349,8 @@ function OperationsViewModel(miscViewModel, options, svgViewModel, materialViewM
     self.maxX = ko.observable(0);
     self.maxY = ko.observable(0);
 
+    self.translations = translationManager.OperationsTranslations;
+
     svgViewModel.pxPerInch.subscribe(function () {
         var ops = self.operations();
         for (var i = 0; i < ops.length; ++i)

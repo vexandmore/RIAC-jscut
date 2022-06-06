@@ -28,6 +28,8 @@ function GcodeConversionViewModel(options, miscViewModel, materialViewModel, too
     self.offsetY = ko.observable(0);
     self.returnTo00 = ko.observable(false);
 
+    self.translations = translationManager.GcodeConversionTranslations;
+
     self.unitConverter.add(self.offsetX);
     self.unitConverter.add(self.offsetY);
 

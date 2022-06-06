@@ -17,6 +17,8 @@
 
 function MiscViewModel() {
     var self = this;
+    self.translations = translationManager.MiscTranslations;
+
     self.enableGoogleDrive = ko.observable(options.enableGoogleDrive);
     self.enableDropbox = ko.observable(options.enableDropbox);
     self.debug = ko.observable(options.debug);
@@ -45,6 +47,7 @@ var toolPathsGroup = mainSvg.g();
 var selectionGroup = mainSvg.g();
 var renderPath;
 
+var translationManager;
 var svgViewModel;
 var materialViewModel;
 var selectionViewModel;
@@ -53,7 +56,6 @@ var operationsViewModel;
 var tabsViewModel;
 var gcodeConversionViewModel;
 var miscViewModel;
-var translationManager;
 
 function loadScript(path, loadedCallback, errorCallback) {
     var done = false;
@@ -122,6 +124,7 @@ window.addEventListener("load", function () {
         downloadCpp();
 }, false);
 
+translationManager = new TranslationManager();
 miscViewModel = new MiscViewModel();
 svgViewModel = new SvgViewModel();
 materialViewModel = new MaterialViewModel();
@@ -134,7 +137,8 @@ tabsViewModel = new TabsViewModel(
     miscViewModel, options, svgViewModel, materialViewModel, selectionViewModel, tabsGroup,
     function () { gcodeConversionViewModel.generateGcode(); });
 gcodeConversionViewModel = new GcodeConversionViewModel(options, miscViewModel, materialViewModel, toolModel, operationsViewModel, tabsViewModel);
-translationManager = new TranslationManager();
+
+ko.applyBindings(translationManager, $("#translationDropdown")[0]);
 
 ko.applyBindings(materialViewModel, $("#Material")[0]);
 ko.applyBindings(selectionViewModel, $("#CurveToLine")[0]);
@@ -155,7 +159,15 @@ ko.applyBindings(miscViewModel, $("#saveGcodeGoogle1")[0]);
 ko.applyBindings(miscViewModel, $("#openSvgGoogle1")[0]);
 ko.applyBindings(miscViewModel, $("#loadSettingsGoogle1")[0]);
 ko.applyBindings(miscViewModel, $("#openSvgDropbox1")[0]);
-ko.applyBindings(translationManager, $("#translationDropdown")[0]);
+// These bindings exist for the top bar translations
+ko.applyBindings(miscViewModel, $("#simulateTab")[0]);
+ko.applyBindings(miscViewModel, $("#toolpathsTab")[0]);
+
+ko.applyBindings(miscViewModel, $("#OpenSVG")[0]);
+ko.applyBindings(miscViewModel, $("#ClearSVGs")[0]);
+ko.applyBindings(miscViewModel, $("#OpenSettings")[0]);
+ko.applyBindings(miscViewModel, $("#SaveSettings")[0]);
+ko.applyBindings(miscViewModel, $("#SaveGcode")[0]);
 
 
 function updateSvgAutoHeight() {

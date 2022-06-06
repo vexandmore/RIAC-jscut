@@ -297,27 +297,27 @@ along with jscut.  If not, see <http://www.gnu.org/licenses/>.
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Open SVG<strong class="caret"></strong></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="OpenSVG" data-bind="html: translations().OpenSVG + '&lt;strong class=\'caret\'&gt;'"></a>
                                 <ul class="dropdown-menu">
                                     <li onclick = "clearFiles()"><a href="#" class="choose-file">Local<input type="file" id="choose-svg-file" multiple></a></li>
                                     <li><a href="#" id="openSvgGoogle1" data-bind="visible: enableGoogleDrive" onclick="openSvgGoogle()">Google Drive</a></li>
                                     <li><a href="#" id="openSvgDropbox1" data-bind="visible: enableDropbox" onclick="openSvgDropbox()">Dropbox</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#" onclick="clearSVGs()">Clear SVGs</a></li>
+                            <li><a href="#" onclick="clearSVGs()" id="ClearSVGs" data-bind="text: translations().ClearSVGs"></a></li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Open Settings<strong class="caret"></strong></a>
+                                <a href="#" class="dropdown-toggle" id="OpenSettings" data-toggle="dropdown" data-bind="html: translations().OpenSettings + '&lt;strong class=\'caret\'&gt;' "></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#" onclick="showLoadSettingsFromLocalStorageModal()">In Browser</a></li>
                                     <li><a href="#" class="choose-file">Local<input type="file" id="choose-settings-file"></a></li>
                                     <li><a href="#" id="loadSettingsGoogle1" data-bind="visible: enableGoogleDrive" onclick="loadSettingsGoogle()">Google Drive</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#" onclick="showSaveSettingsModal()">Save Settings</a></li>
-                            <li><a href="#save-gcode-modal" data-toggle="modal">Save GCODE</a></li>
+                            <li><a href="#" onclick="showSaveSettingsModal()" id="SaveSettings" data-bind="text: translations().SaveSettings"></a></li>
+                            <li><a href="#save-gcode-modal" data-toggle="modal" id="SaveGcode" data-bind="text: translations().SaveGcode"></a></li>
                             
                             <li class="dropdown" id="translationDropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-bind="html: miscViewModel().Language"></strong></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-bind="html: translations().Language + '&lt;strong class=\'caret\'&gt;'"></a>
                                 <ul class="dropdown-menu" data-bind="foreach: languages">
                                     <li><a href="#" data-bind="text: $data, click: $parent.setLanguage"></a></li>
                                 </ul>
@@ -329,10 +329,10 @@ along with jscut.  If not, see <http://www.gnu.org/licenses/>.
                 <div class="tabbable" id="tabs-139888">
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="#svgPanel" data-toggle="tab">Edit Toolpaths</a>
+                            <a href="#svgPanel" data-toggle="tab" id="toolpathsTab" data-bind="text: translations().EditToolpaths"></a>
                         </li>
                         <li>
-                            <a href="#simulatePanel" data-toggle="tab">Simulate GCODE</a>
+                            <a href="#simulatePanel" data-toggle="tab" id="simulateTab" data-bind="text: translations().SimulateGcode"></a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -341,16 +341,14 @@ along with jscut.  If not, see <http://www.gnu.org/licenses/>.
                         </div>
                         <div class="tab-pane" id="simulatePanel">
                             <canvas id="renderPathCanvas" style="border: none;" width="10" height="10"></canvas>
-                            <br /><br /><b>Simulation time: &nbsp;&nbsp;&nbsp;</b><input id="timeSlider" type="text" data-slider-min="0" data-slider-max="1000" data-slider-step="1" data-slider-value="1000" />
+                            <br /><br /><b data-bind="text: translations().SimulationTime + '&nbsp;&nbsp;&nbsp;'"></b><input id="timeSlider" type="text" data-slider-min="0" data-slider-max="1000" data-slider-step="1" data-slider-value="1000" />
                             <br /><br />
                             <div data-bind="visible: miscViewModel.debug">
                                 <label class="control-label">debugArg0:&nbsp;</label><input type="number" step="any" data-bind="value: miscViewModel.debugArg0"><br />
                                 <label class="control-label">debugArg1:&nbsp;</label><input type="number" step="any" data-bind="value: miscViewModel.debugArg1"><br />
                             </div>
-                            <ul>
-                                <li>Use mouse to rotate view</li>
-                                <li>Use slider control to set simulation time</li>
-                                <li>Simulation remains blank until you generate toolpaths</li>
+                            <ul data-bind="foreach: translations().SimulationInstructions">
+                                <li data-bind="text: $data"></li>
                             </ul>
                         </div>
                     </div>
@@ -363,21 +361,21 @@ along with jscut.  If not, see <http://www.gnu.org/licenses/>.
                 <div class="panel panel-default" id="Operations">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOperations">Generate Gcode!</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOperations" data-bind="text: translations().PanelTitle"></a>
                         </h3>
                     </div>
                     <div id="collapseOperations" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <table class="table">
                                 <tr>
-                                    <td><label for="pxPerInch">px per inch</label>
+                                    <td><label for="pxPerInch" data-bind="text: translations().PxPerInch"></label>
                                     <td><input type="number" step="any" id="pxPerInch" data-bind="value: svgViewModel.pxPerInch">
                             </table>
                             <div style="display: inline-block; padding-bottom: 10px;">
-                                <button id="createGcodeSeparateButton" class="btn btn-success" data-bind="click: generateGcodeSeparate, enable:miscViewModel.fileLoaded()">Generate gcode - Separate</button>
+                                <button id="createGcodeSeparateButton" class="btn btn-success" data-bind="text: translations().GenerateSeparate, click: generateGcodeSeparate, enable:miscViewModel.fileLoaded()"></button>
                             </div>
                             <div style="display: inline-block">
-                                <button id="createGcodeCombineButton" class="btn btn-success" data-bind="click: generateGcodeCombine, enable:miscViewModel.fileLoaded()">Generate gcode - Combine</button>
+                                <button id="createGcodeCombineButton" class="btn btn-success" data-bind="text: translations().GenerateCombine, click: generateGcodeCombine, enable:miscViewModel.fileLoaded()"></button>
                             </div>
                         </div>
                         <div style="display:table">
@@ -506,13 +504,13 @@ along with jscut.  If not, see <http://www.gnu.org/licenses/>.
     <script src="api/js/parseGcode.js"></script>
     <script src="js/RenderPath.js"></script>
     <script src="js/UnitConverter.js"></script>
+    <script src="js/TranslationManager.js"></script>
     <script src="js/SvgViewModel.js"></script>
     <script src="js/MaterialViewModel.js"></script>
     <script src="js/SelectionViewModel.js"></script>
     <script src="js/OperationsViewModel.js"></script>
     <script src="js/TabsViewModel.js"></script>
     <script src="js/GcodeConversionViewModel.js"></script>
-    <script src="js/TranslationManager.js"></script>
     <script src="js/jscut.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onGoogleApiLoad"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=onGoogleClientLoad"></script>
