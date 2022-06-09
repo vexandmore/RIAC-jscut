@@ -29,7 +29,7 @@ function SelectionViewModel(svgViewModel, materialViewModel, selectionGroup) {
      */
     self.getAllPaths = function() {
         var paths = [];
-        Snap.selectAll("g.layer path").forEach(function(element) {
+        Snap.selectAll("#MainSvg path").forEach(function(element) {
             var path = jscut.priv.path.getLinearSnapPathFromElement(element, self.selMinNumSegments(), self.selMinSegmentLength.toInch() * svgViewModel.pxPerInch(), function (msg) {
                 showAlert(msg, "alert-warning");
             });
