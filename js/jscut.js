@@ -243,7 +243,24 @@ function tutorial(step, message) {
 
 tutorial(1, 'Open an SVG file.');
 
+var currentSVG = null;
+var previousSVGs = [];
+
+// This function loads the svg after it is selected by the user.
+function loadSVGFromFilePicker(alert, filename, content) {
+    if (currentSVG !== null) {
+        previousSVGs.push(currentSVG);
+        while (previousSVGs.length > 3) {
+            previousSVGs.shift();
+        }
+    }
+    clearSVGs();
+    loadSvg(alert, filename, content);
+}
+
+// This loads in the svg and sets currentSVG
 function loadSvg(alert, filename, content) {
+    currentSVG = content;
     svg = Snap.parse(content);
     contentGroup.append(svg);
     updateSvgSize();
@@ -251,6 +268,19 @@ function loadSvg(alert, filename, content) {
         alert.remove();
     showAlert("loaded " + filename, "alert-success");
     tutorial(2, 'Click on either "Generate gcode - Separate", or "Generate gcode - Combine".');
+    miscViewModel.fileLoaded(true);
+}
+
+// This function resets the whole app.
+// Removes all svgs, operations, clears the simulation,
+// and nulls currentSVG
+function clearSVGs() {
+    currentSVG = null;
+    operationsViewModel.reset();
+    gcodeConversionViewModel.reset();
+    contentGroup.clear();
+    renderPath.fillPathBuffer("", 0, 0, 0, 0);
+    miscViewModel.fileLoaded(false);
 }
 
 // This event is fired when the file picker is used.
@@ -262,19 +292,15 @@ $(document).on('change', '#choose-svg-file', function (event) {
             var alert = showAlert("loading " + file.name, "alert-info", false);
             var reader = new FileReader();
             reader.onload = function (e) {
-                clearSVGs();
-                loadSvg(alert, file.name, e.target.result);
-                miscViewModel.fileLoaded(true);
+                loadSVGFromFilePicker(alert, file.name, e.target.result);
             };
             reader.onabort = function (e) {
                 alert.remove();
                 showAlert("aborted reading " + file.name, "alert-danger");
-                miscViewModel.fileLoaded(false);
             };
             reader.onerror = function (e) {
                 alert.remove();
                 showAlert("error reading " + file.name, "alert-danger");
-                miscViewModel.fileLoaded(false);
             };
             reader.readAsText(file);
         })(file);
@@ -289,15 +315,14 @@ function clearFiles() {
     $("#choose-svg-file")[0].value = '';
 }
 
-// This function resets the whole app.
-// Removes all svgs, operations, and clears the simulation.
-function clearSVGs() {
-    operationsViewModel.reset();
-    gcodeConversionViewModel.reset();
-    contentGroup.clear();
-    renderPath.fillPathBuffer("", 0, 0, 0, 0);
-    miscViewModel.fileLoaded(false);
-}
+// This loads the previous svg on control Z
+$(document).on('keypress', function(e){
+    var zKey = 26;
+    if(e.ctrlKey && e.which === zKey && previousSVGs.length > 0){
+        clearSVGs();
+        loadSvg(null, "from clipboard", previousSVGs.pop())
+    }
+})
 
 function openSvgDropbox() {
     Dropbox.choose({
