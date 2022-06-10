@@ -29,15 +29,22 @@ function SelectionViewModel(svgViewModel, materialViewModel, selectionGroup) {
      */
     self.getAllPaths = function() {
         var paths = [];
-        Snap.selectAll("#MainSvg path").forEach(function(element) {
+        // first, check if there are any SVG elements this code can't handle
+        var unusableElementNames = "circle, ellipse, line, polygon, polyline, image, switch, symbol, text";
+        var unusableElements = contentGroup.selectAll(unusableElementNames);
+        unusableElements.forEach(function(e) {
+            showAlert("<b>" + e.type + "</b> is not supported; try Inkscape's <strong>Object to Path</strong> command" +
+            ". JScut will still work, but not with all elements.", "alert-warning");
+        });
+        contentGroup.selectAll("rect, path").forEach(function(element) {
             var path = jscut.priv.path.getLinearSnapPathFromElement(element, self.selMinNumSegments(), self.selMinSegmentLength.toInch() * svgViewModel.pxPerInch(), function (msg) {
                 showAlert(msg, "alert-warning");
             });
     
             if (path != null) {
                 var newPath = selectionGroup.path(path);
-                /*if (element.attr("fill-rule") == "evenodd")
-                    newPath.attr("fill-rule", "evenodd");*/
+                if (element.attr("fill-rule") == "evenodd")
+                    newPath.attr("fill-rule", "evenodd");
             }
             paths.push(newPath);
         });
