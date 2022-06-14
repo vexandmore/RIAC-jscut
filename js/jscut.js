@@ -914,5 +914,7 @@ function chiliSaveGcode() {
 
 if (typeof options.preloadInBrowser == 'string' && options.preloadInBrowser.length > 0) {
     var settings = JSON.parse(localStorage.getItem("settings"));
-    fromJson(settings[options.preloadInBrowser]);
+    if (settings !== null) {
+        fromJson(settings[options.preloadInBrowser]);
+    }
 }
