@@ -31,12 +31,12 @@ function SelectionViewModel(svgViewModel, materialViewModel, selectionGroup) {
         var paths = [];
         // first, check if there are any SVG elements this code can't handle
         var unusableElementNames = "circle, ellipse, line, polygon, polyline, image, switch, symbol, text";
-        var unusableElements = contentGroup.selectAll(unusableElementNames);
+        var unusableElements = hiddenGroup.selectAll(unusableElementNames);
         unusableElements.forEach(function(e) {
             showAlert("<b>" + e.type + "</b> is not supported; try Inkscape's <strong>Object to Path</strong> command" +
             ". JScut will still work, but not with all elements.", "alert-warning");
         });
-        contentGroup.selectAll("rect, path").forEach(function(element) {
+        hiddenGroup.selectAll("rect, path").forEach(function(element) {
             var path = jscut.priv.path.getLinearSnapPathFromElement(element, self.selMinNumSegments(), self.selMinSegmentLength.toInch() * svgViewModel.pxPerInch(), function (msg) {
                 showAlert(msg, "alert-warning");
             });

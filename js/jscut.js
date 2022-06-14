@@ -37,6 +37,10 @@ function MiscViewModel() {
     self.fileLoaded = ko.observable(false);
 }
 
+
+var hiddenSvg = Snap("#HiddenSvg");
+var hiddenGroup = hiddenSvg.group();
+
 var mainSvg = Snap("#MainSvg");
 var materialSvg = Snap("#MaterialSvg");
 var contentGroup = mainSvg.group();
@@ -263,6 +267,8 @@ function loadSvg(alert, filename, content) {
     currentSVG = content;
     svg = Snap.parse(content);
     contentGroup.append(svg);
+    svg = Snap.parse(content);
+    hiddenGroup.append(svg);
     updateSvgSize();
     if(alert)
         alert.remove();
@@ -279,6 +285,7 @@ function clearSVGs() {
     operationsViewModel.reset();
     gcodeConversionViewModel.reset();
     contentGroup.clear();
+    hiddenGroup.clear();
     renderPath.fillPathBuffer("", 0, 0, 0, 0);
     miscViewModel.fileLoaded(false);
 }
