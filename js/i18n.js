@@ -7,7 +7,7 @@ const rerender = () => {
     $('body').localize();
 }
 
-window.i18n = i18next;
+var i18nInit = null;
 
 const resources = {
     en: {
@@ -122,26 +122,26 @@ const resources = {
 
 
 
-$(function () {
-    // use plugins and options as needed, for options, detail see
-    // https://www.i18next.com
-    i18next
-      // detect user language
-      // learn more: https://github.com/i18next/i18next-browser-languageDetector
-      .use(i18nextBrowserLanguageDetector)
-      // init i18next
-      // for all options read: https://www.i18next.com/overview/configuration-options
-      .init({
-        debug: true,
-        fallbackLng: 'en',
-        resources: resources
-      }, (err, t) => {
+
+// use plugins and options as needed, for options, detail see
+// https://www.i18next.com
+i18nInit = i18next
+// detect user language
+// learn more: https://github.com/i18next/i18next-browser-languageDetector
+.use(i18nextBrowserLanguageDetector)
+// init i18next
+// for all options read: https://www.i18next.com/overview/configuration-options
+.init({
+    debug: true,
+    fallbackLng: 'en',
+    resources: resources
+    }, (err, t) => {
         if (err) return console.error(err);
-  
+
         // for options see
         // https://github.com/i18next/jquery-i18next#initialize-the-plugin
         jqueryI18next.init(i18next, $, { useOptionsAttr: true });
-  
+
         // Fill language switcher
         Object.keys(lngs).map((lng) => {
             const opt = new Option(lngs[lng].nativeName, lng);
@@ -159,5 +159,4 @@ $(function () {
         });
         // load initial translations
         rerender();
-      });
-  });
+});

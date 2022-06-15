@@ -215,11 +215,12 @@ function showAlert(message, alerttype, haveTimeout) {
         }, 5000);
     return result;
 }
-function showAlertLocalized(key, options, alerttype, haveTimeout) {
+async function showAlertLocalized(key, options, alerttype, haveTimeout) {
+    await i18nInit;
     haveTimeout = (typeof haveTimeout === "undefined") ? true : false;
     var alertNum = nextAlertNum++;
     var newAlert = $('<div>', {
-        id: "alertNum" + alertNum,
+        id: "AlertNum" + alertNum,
         class: 'alert ' + alerttype,
     });
     $('<a class="close" data-dismiss="alert">&times;</a>').appendTo(newAlert);
@@ -236,13 +237,6 @@ function showAlertLocalized(key, options, alerttype, haveTimeout) {
     $('#alert_placeholder').localize();
     return result;
 }
-function showTutorial(message, alerttype) {
-    var alertNum = nextAlertNum++;
-    $('#alert_placeholder').prepend('<div data-i18n="' + message + '" id="AlertNum' + alertNum + '" class="alert ' + alerttype + '"><a class="close" data-dismiss="alert">&times;</a></div>')
-    var result = $("#AlertNum" + alertNum);
-    setTimeout(function(){$('body').localize();}, 0);
-    return result;
-}
 
 Snap.load("Material.svg", function (f) {
     materialSvg.append(f);
@@ -252,12 +246,12 @@ Snap.load("Material.svg", function (f) {
 var tutorialAlert = null;
 var nextTutorialStep = 0;
 
-function tutorial(step, message) {
+async function tutorial(step, message) {
     if (step >= nextTutorialStep) {
         if (tutorialAlert != null)
             tutorialAlert.remove();
-        tutorialAlert = showTutorial(message, "alert-info");
         nextTutorialStep = step + 1;
+        tutorialAlert = await showAlertLocalized(message, {}, "alert-info", false);
     }
 }
 
