@@ -17,8 +17,7 @@
 
 function MiscViewModel() {
     var self = this;
-    self.translations = translationManager.MiscTranslations;
-
+    
     self.enableGoogleDrive = ko.observable(options.enableGoogleDrive);
     self.enableDropbox = ko.observable(options.enableDropbox);
     self.debug = ko.observable(options.debug);
@@ -51,7 +50,6 @@ var toolPathsGroup = mainSvg.g();
 var selectionGroup = mainSvg.g();
 var renderPath;
 
-var translationManager;
 var svgViewModel;
 var materialViewModel;
 var selectionViewModel;
@@ -128,7 +126,6 @@ window.addEventListener("load", function () {
         downloadCpp();
 }, false);
 
-translationManager = new TranslationManager();
 miscViewModel = new MiscViewModel();
 svgViewModel = new SvgViewModel();
 materialViewModel = new MaterialViewModel();
@@ -141,8 +138,6 @@ tabsViewModel = new TabsViewModel(
     miscViewModel, options, svgViewModel, materialViewModel, selectionViewModel, tabsGroup,
     function () { gcodeConversionViewModel.generateGcode(); });
 gcodeConversionViewModel = new GcodeConversionViewModel(options, miscViewModel, materialViewModel, toolModel, operationsViewModel, tabsViewModel);
-
-ko.applyBindings(translationManager, $("#translationDropdown")[0]);
 
 ko.applyBindings(materialViewModel, $("#Material")[0]);
 ko.applyBindings(selectionViewModel, $("#CurveToLine")[0]);
@@ -163,15 +158,7 @@ ko.applyBindings(miscViewModel, $("#saveGcodeGoogle1")[0]);
 ko.applyBindings(miscViewModel, $("#openSvgGoogle1")[0]);
 ko.applyBindings(miscViewModel, $("#loadSettingsGoogle1")[0]);
 ko.applyBindings(miscViewModel, $("#openSvgDropbox1")[0]);
-// These bindings exist for the top bar translations
-ko.applyBindings(miscViewModel, $("#simulateTab")[0]);
-ko.applyBindings(miscViewModel, $("#toolpathsTab")[0]);
 
-ko.applyBindings(miscViewModel, $("#OpenSVG")[0]);
-ko.applyBindings(miscViewModel, $("#ClearSVGs")[0]);
-ko.applyBindings(miscViewModel, $("#OpenSettings")[0]);
-ko.applyBindings(miscViewModel, $("#SaveSettings")[0]);
-ko.applyBindings(miscViewModel, $("#SaveGcode")[0]);
 
 
 function updateSvgAutoHeight() {
@@ -228,6 +215,13 @@ function showAlert(message, alerttype, haveTimeout) {
         }, 5000);
     return result;
 }
+function showTutorial(message, alerttype) {
+    var alertNum = nextAlertNum++;
+    $('#alert_placeholder').prepend('<div data-i18n="' + message + '" id="AlertNum' + alertNum + '" class="alert ' + alerttype + '"><a class="close" data-dismiss="alert">&times;</a></div>')
+    var result = $("#AlertNum" + alertNum);
+    setTimeout(function(){$('body').localize();}, 0);
+    return result;
+}
 
 Snap.load("Material.svg", function (f) {
     materialSvg.append(f);
@@ -236,16 +230,17 @@ Snap.load("Material.svg", function (f) {
 
 var tutorialAlert = null;
 var nextTutorialStep = 0;
+
 function tutorial(step, message) {
     if (step >= nextTutorialStep) {
         if (tutorialAlert != null)
             tutorialAlert.remove();
-        tutorialAlert = showAlert("Step " + step + ": " + message, "alert-info", false);
+        tutorialAlert = showTutorial(message, "alert-info");
         nextTutorialStep = step + 1;
     }
 }
 
-tutorial(1, 'Open an SVG file.');
+tutorial(1, 'tutorial.OpenSVG');
 
 var currentSVG = null;
 var previousSVGs = [];
@@ -273,7 +268,7 @@ function loadSvg(alert, filename, content) {
     if(alert)
         alert.remove();
     showAlert("loaded " + filename, "alert-success");
-    tutorial(2, 'Click on either "Generate gcode - Separate", or "Generate gcode - Combine".');
+    tutorial(2, 'tutorial.Generate');
     miscViewModel.fileLoaded(true);
 }
 
@@ -452,30 +447,34 @@ function hookupTabPopovers(nodes) {
 $('#createGcodeSeparateButton').popover({
     trigger: "manual",
     html: true,
-    content: "<p class='bg-danger'>Load an svg file before clicking here</p>",
+    content: "<p class='bg-danger' data-i18n='operations.LoadMessage'>Test</p>",
     container: "body",
     placement: "right"
 });
 
 $('#createGcodeSeparateButton').parent().hover(
     function () {
-        if ($('#createGcodeSeparateButton').attr("disabled"))
+        if ($('#createGcodeSeparateButton').attr("disabled")) {
             $('#createGcodeSeparateButton').popover('show');
+            $('.popover').localize();
+        }
     },
     function () { $('#createGcodeSeparateButton').popover('hide'); });
 
 $('#createGcodeCombineButton').popover({
     trigger: "manual",
     html: true,
-    content: "<p class='bg-danger'>Load an svg file before clicking here</p>",
+    content: "<p class='bg-danger' data-i18n='operations.LoadMessage'></p>",
     container: "body",
     placement: "right"
 });
 
 $('#createGcodeCombineButton').parent().hover(
     function () {
-        if ($('#createGcodeCombineButton').attr("disabled"))
+        if ($('#createGcodeCombineButton').attr("disabled")) {
             $('#createGcodeCombineButton').popover('show');
+            $('.popover').localize();
+        }
     },
     function () { $('#createGcodeCombineButton').popover('hide'); });
 

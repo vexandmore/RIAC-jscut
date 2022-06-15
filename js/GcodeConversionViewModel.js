@@ -28,8 +28,6 @@ function GcodeConversionViewModel(options, miscViewModel, materialViewModel, too
     self.offsetY = ko.observable(0);
     self.returnTo00 = ko.observable(false);
 
-    self.translations = translationManager.GcodeConversionTranslations;
-
     self.unitConverter.add(self.offsetX);
     self.unitConverter.add(self.offsetY);
 
@@ -181,7 +179,7 @@ function GcodeConversionViewModel(options, miscViewModel, materialViewModel, too
             renderPath.setStopAtTime(renderPath.totalTime);
         }
 
-        tutorial(3, 'You\'re done! Look at the "Simulate GCODE" tab. Save your gcode.');
+        tutorial(3, 'tutorial.Done');
     }
 
     self.offsetX.subscribe(self.generateGcode);
