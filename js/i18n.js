@@ -41,6 +41,13 @@ const resources = {
                 GenerateCombine: "Generate gcode - Combine",
                 LoadMessage: "Load an svg file before clicking here"
             },
+            selection: {
+                Title: "Curve To Line Conversion",
+                MinSegment: "Minimum Segments",
+                MinSegmentPopover: "Minimum number of line segments to convert a curve to. jscut does this conversion when you generate gcode.",
+                MinSegmentLength: "Minimum Segment Length",
+                MinSegmentLengthPopover: "Minimum length of each line segment when converting curves. jscut does this conversion when you generate gcode."
+            },
             simulation: {
                 SimulationTime: "Simulation time:\xa0\xa0\xa0",
                 Instructions: ["Use mouse to rotate view",
@@ -84,6 +91,13 @@ const resources = {
                 GenerateSeparate: "Génère gcode - sépare",
                 GenerateCombine: "Génère gcode - combine",
                 LoadMessage: "Ouvre un fichier svg avant de cliquer ici"
+            },
+            selection: {
+                Title: "Conversion de courbe en ligne",
+                MinSegment: "Nombre minimum de segments",
+                MinSegmentPopover: "Nombre minimum de segments de ligne dans lequel convertir une courbe. jscut fait cette conversion lorsque vous générez du gcode",
+                MinSegmentLength: "Longeur minimale du segment",
+                MinSegmentLengthPopover: "Longueur minimale de chaque segment de ligne en convertissant les courbes. jscut fait cette conversion lorsque vous générez du gcode."
             },
             simulation: {
                 SimulationTime: "Temps de simulation:\xa0\xa0\xa0",

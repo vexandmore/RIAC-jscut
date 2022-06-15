@@ -391,8 +391,8 @@ popoverHover('#inputMatThickness', "top", "How thick is the material");
 popoverHover('#selectMatZOrigin', "top", "What is considered the 0 Z position");
 popoverHover('#inputMatClearance', "top", "How high the tool moves over the material. Increase this when using clamps or screws to fasten the material.");
 
-popoverHover('#inputSelMinNumSegments', "top", "Minimum number of line segments to convert a curve to. jscut does this conversion when you select an object (it becomes blue).");
-popoverHover('#inputSelMinSegmentLength', "top", "Minimum length of each line segment when converting curves. jscut does this conversion when you select an object (it becomes blue).");
+popoverHover('#inputSelMinNumSegments', "top", () => $.t("selection.MinSegmentPopover"));
+popoverHover('#inputSelMinSegmentLength', "top", () => $.t("selection.MinSegmentLengthPopover"));
 
 popoverHover('#gcodeZeroLowerLeft', "top", "Changes the X and Y Offset values so that 0,0 is at the lower-left corner of all tool paths.");
 popoverHover('#gcodeZeroCenter', "top", "Changes the X and Y Offset values so that 0,0 is at the center of all tool paths.");

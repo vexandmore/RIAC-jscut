@@ -297,7 +297,7 @@ along with jscut.  If not, see <http://www.gnu.org/licenses/>.
                             <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="index.html" target="_blank"><img alt="Robot in a Can" id="RIAC-logo" src="RIAC-logo.png"/>jscut</a>
+                        <a class="navbar-brand" target="_blank"><img alt="Robot in a Can" id="RIAC-logo" src="RIAC-logo.png"/>jscut</a>
                         <span data-i18n="toolbar.Language"></span>
                         <select style="margin: 15px 15px 15px 0px" name="language" id="languageSwitcher" autocomplete="off"></select>
                     </div>
@@ -436,7 +436,7 @@ along with jscut.  If not, see <http://www.gnu.org/licenses/>.
                 <div class="panel panel-default" id="CurveToLine">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            <a class="collpased" data-toggle="collapse" data-parent="#accordion" href="#collapseCurveToLine">Curve To Line Conversion</a>
+                            <a class="collpased" data-toggle="collapse" data-parent="#accordion" href="#collapseCurveToLine" data-i18n="selection.Title"></a>
                         </h3>
                     </div>
                     <div id="collapseCurveToLine" class="panel-collapse collapse">
@@ -444,10 +444,10 @@ along with jscut.  If not, see <http://www.gnu.org/licenses/>.
                             <div class="form-horizontal">
                                 <table class="table">
                                     <tr>
-                                        <td><label for="inputSelMinNumSegments">Minimum Segments</label>
+                                        <td><label for="inputSelMinNumSegments" data-i18n="selection.MinSegment"></label>
                                         <td><input type="number" id="inputSelMinNumSegments" data-bind="value: selMinNumSegments" placeholder="Segments">
                                     <tr>
-                                        <td><label for="inputSelMinSegmentLength">Minimum Segment Length (<span data-bind="text: selMinSegmentLength.units()"></span>)</label>
+                                        <td><label for="inputSelMinSegmentLength"><span data-i18n="selection.MinSegmentLength"></span> (<span data-bind="text: selMinSegmentLength.units()"></span>)</label>
                                         <td><input type="number" step="any" id="inputSelMinSegmentLength" data-bind="value: selMinSegmentLength" placeholder="Length">
                                 </table>
                             </div>
