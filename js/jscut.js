@@ -215,6 +215,27 @@ function showAlert(message, alerttype, haveTimeout) {
         }, 5000);
     return result;
 }
+function showAlertLocalized(key, options, alerttype, haveTimeout) {
+    haveTimeout = (typeof haveTimeout === "undefined") ? true : false;
+    var alertNum = nextAlertNum++;
+    var newAlert = $('<div>', {
+        id: "alertNum" + alertNum,
+        class: 'alert ' + alerttype,
+    });
+    $('<a class="close" data-dismiss="alert">&times;</a>').appendTo(newAlert);
+    $('<span>', {
+        "data-i18n": key,
+        "data-i18n-options": JSON.stringify(options)
+    }).appendTo(newAlert);
+    $('#alert_placeholder').prepend(newAlert);
+    var result = $("#AlertNum" + alertNum);
+    if (haveTimeout)
+        setTimeout(function () {
+            result.remove();
+        }, 5000);
+    $('#alert_placeholder').localize();
+    return result;
+}
 function showTutorial(message, alerttype) {
     var alertNum = nextAlertNum++;
     $('#alert_placeholder').prepend('<div data-i18n="' + message + '" id="AlertNum' + alertNum + '" class="alert ' + alerttype + '"><a class="close" data-dismiss="alert">&times;</a></div>')

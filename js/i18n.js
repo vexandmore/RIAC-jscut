@@ -58,6 +58,9 @@ const resources = {
                 OpenSVG: "Step 1: Open an SVG file",
                 Generate: "Step 2: Click on either \"$t(operations.GenerateSeparate)\", or \"$t(operations.GenerateSeparate)\".",
                 Done: "Step 3: You\'re done! Look at the \"Simulate GCODE\" tab. Save your gcode.",
+            },
+            errors: {
+                UnsupportedSvg: "<b>{{thing}}</b> is not supported; try Inkscape's <strong>Object to Path</strong> command. JScut will still work, but not with all elements."
             }
         }
     },
@@ -109,6 +112,9 @@ const resources = {
                 OpenSVG: "Étape 1: Ouvre un fichier SVG",
                 Generate: "Étape 2: Clique sur \"$t(operations.GenerateSeparate)\", ou \"$t(operations.GenerateCombine)\".",
                 Done: "Étape 3: Terminé! Regarde dans l'onglet \"Simule GCODE\". Sauvegarde ton gcode.",
+            },
+            errors: {
+                UnsupportedSvg: "<b>{{thing}}</b> n'est pas supporté; essaye la commande <strong>Objet en chemin</strong> dans Inkscape. JScut fonctionnera, mais pas avec cet élément."
             }
         }
     }
