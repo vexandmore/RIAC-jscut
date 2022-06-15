@@ -286,8 +286,9 @@ along with jscut.  If not, see <http://www.gnu.org/licenses/>.
             </div>
             <!-- center -->
             <!-- This hidden SVG exists because otherwise, generating gcode while the View Svg tab is
-            hidden is buggy (element orientation not right, size not right). -->
-            <div id="HiddenSvgDiv" style="z-index: -1; position: absolute;">
+            hidden is buggy (element orientation not right, size not right). Having the svgs 'be' somewhere
+            at all times like this seems to help. -->
+            <div id="HiddenSvgDiv" style="z-index: -1; position: absolute; width: 1px; height: 1px;">
                 <svg id="HiddenSvg" viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet"></svg>
             </div>
             <div id="MainSvgDiv" class="col-sm-6">
