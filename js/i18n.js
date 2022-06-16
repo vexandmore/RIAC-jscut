@@ -12,10 +12,6 @@ var i18nInit = null;
 const resources = {
     en: {
         translation: {
-            intro: {
-                title: " A CAM in your browser!",
-                subtitle: "Convert your SVG files to CNC cutting paths with this tool."
-            },
             toolbar: {
                 OpenSVG: "Open SVG ▼",
                 ClearSVGs: "Clear SVGs",
@@ -37,6 +33,7 @@ const resources = {
             operations: {
                 Title: "Generate gcode",
                 PxPerInch: "px per inch",
+                PxPerInchPopover: "SVG editors use different scales from each other; set this to allow sizes come out correctly.<br><br><table><tr><td>Inkscape 0.9x:<td>96<tr><td>Inkscape 0.4x:<td>90<tr><td>Adobe Illustrator:<td>72<tr><td>CorelDRAW:<td>96</table>",
                 GenerateSeparate: "Generate gcode - Separate",
                 GenerateCombine: "Generate gcode - Combine",
                 LoadMessage: "Load an svg file before clicking here"
@@ -56,7 +53,7 @@ const resources = {
             },
             tutorial: {
                 OpenSVG: "Step 1: Open an SVG file",
-                Generate: "Step 2: Click on either \"$t(operations.GenerateSeparate)\", or \"$t(operations.GenerateSeparate)\".",
+                Generate: "Step 2: Click on either \"$t(operations.GenerateSeparate)\", or \"$t(operations.GenerateCombine)\".",
                 Done: "Step 3: You\'re done! Look at the \"Simulate GCODE\" tab. Save your gcode.",
             },
             errors: {
@@ -66,10 +63,6 @@ const resources = {
     },
     fr: {
         translation: {
-            intro: {
-                title: "Un CAM dans votre navigateur!",
-                subtitle: "Convertis vos fichers SVG à des tracés CNC avec cet outil."
-            },
             toolbar: {
                 OpenSVG: "Ouvre SVG ▼",
                 ClearSVGs: "Efface les SVG",
@@ -82,7 +75,7 @@ const resources = {
                 Close: "Fermer",
                 LocalFile: "Fichier local",
                 InBrowser: "En navigateur",
-                DefaultSettings: "Avez-vous des paramètres de défaut? Nomme-les \"preload.jscut\" et clique \"$t(save.InBrowser)\". jscut chargera-les automatiquement à chaque fois qu'il démarre'."
+                DefaultSettings: "Avez-vous des paramètres de défaut? Nomme-les \"preload.jscut\" et clique \"$t(save.InBrowser)\". jscut chargera-les automatiquement à chaque fois qu'il démarre."
             },
             tabs: {
                 EditToolpaths: "Regarde SVG",
@@ -91,6 +84,7 @@ const resources = {
             operations: {
                 Title: "Génère gcode",
                 PxPerInch: "px par pouce",
+                PxPerInchPopover: "Les éditeurs de SVG utilisent des échèlles différents l'un de l'autre; change ce paramètre pour que les tailles soient exactes.<br><br><table><tr><td>Inkscape 0.9x:<td>96<tr><td>Inkscape 0.4x:<td>90<tr><td>Adobe Illustrator:<td>72<tr><td>CorelDRAW:<td>96</table>",
                 GenerateSeparate: "Génère gcode - sépare",
                 GenerateCombine: "Génère gcode - combine",
                 LoadMessage: "Ouvre un fichier svg avant de cliquer ici"
